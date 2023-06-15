@@ -31,4 +31,6 @@ u16 vgaEntry(unsigned char ch, VgaColor fore_color, VgaColor back_color);
 void clearVgaBuffer(u16** buffer, VgaColor fore_color, VgaColor back_color);
 void initVga(u16** buffer, VgaColor fore_color, VgaColor back_color);
 
+void printf(const char* text, ...);
+
 #endif // VGA_H

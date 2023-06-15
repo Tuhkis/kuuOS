@@ -26,3 +26,7 @@ void initVga(u16** buffer, VgaColor fore_color, VgaColor back_color) {
 	clearVgaBuffer(buffer, fore_color, back_color);  //clear buffer
 }
 
+void printf(const char* text, ...) {
+	
+}
+
