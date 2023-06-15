@@ -1,5 +1,6 @@
 #include "kernel.h"
 #include "vga.h"
+#include "keyboard.h"
 
 void kernel_entry() {
 	u16* vgaBuffer;
@@ -8,5 +9,9 @@ void kernel_entry() {
 	const char* text = "Hello world!";
 	for (u8 i = 0; i < 12; ++i)
 		vgaBuffer[i] = vgaEntry(text[i], VGA_BLACK, VGA_WHITE);
+	for (;;) {
+		if (getInputKeycode() == KEY_SPACE)
+		vgaBuffer[80] = vgaEntry('d', VGA_YELLOW, VGA_BLUE);
+	}
 }
 
