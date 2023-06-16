@@ -1,6 +1,8 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
+#include "kernel.h"
+
 #define KEYBOARD_PORT 0x60
 
 #define KEY_A 0x1E
@@ -83,6 +85,8 @@
 #define KEY_UP 0x48
 
 char getInputKeycode();
-	
+u8 inb(u16 port);
+void outb(u16 port, u8 data);
+
 #endif // KEYBOARD_H
 

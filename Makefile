@@ -6,7 +6,7 @@ CFLAGS=-m32 -std=gnu99 -ffreestanding -O3 -Wall -Wextra
 OUT=kuuOS
 COMP=$(CC) $(CFLAGS) -c
 
-all: kernel.o boot.o vga.o keyboard.o
+all: kernel.o boot.o vga.o keyboard.o string.o
 	ld -m elf_i386 -T linker.ld *.o -o $(OUT).bin -nostdlib
 	grub-file --is-x86-multiboot kuuOS.bin
 	mkdir -p iso/boot/grub
@@ -23,8 +23,14 @@ vga.o: src/vga.c src/vga.h
 keyboard.o: src/keyboard.c src/keyboard.h
 	$(COMP) src/keyboard.c
 
+string.o: src/string.c src/string.h
+	$(COMP) src/string.c
+
 boot.o: src/boot.s
 	$(AS) --32 src/boot.s -o boot.o
+
+a20.o: src/a20.s
+	$(AS) --32 src/a20.s -o a20.o
 
 run:
 	qemu-system-x86_64 -cdrom $(OUT).iso

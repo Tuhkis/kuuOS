@@ -6,7 +6,10 @@
 #define VGA_ADDRESS 0xB8000
 #define VGA_BUFSIZE 2200
 
-#define NULL 0
+typedef struct {
+	u16* vgaBuffer;
+	u32 count;
+} VgaContext;
 
 typedef enum {
     VGA_BLACK,
@@ -31,6 +34,6 @@ u16 vgaEntry(unsigned char ch, VgaColor fore_color, VgaColor back_color);
 void clearVgaBuffer(u16** buffer, VgaColor fore_color, VgaColor back_color);
 void initVga(u16** buffer, VgaColor fore_color, VgaColor back_color);
 
-void printf(const char* text, ...);
+void print(VgaContext* vga, const char* text);
 
 #endif // VGA_H

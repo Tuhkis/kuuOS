@@ -1,4 +1,5 @@
 #include "vga.h"
+#include "string.h"
 
 u16 vgaEntry(unsigned char ch, VgaColor fore_color, VgaColor back_color) {
   u16 ax = 0;
@@ -26,7 +27,14 @@ void initVga(u16** buffer, VgaColor fore_color, VgaColor back_color) {
 	clearVgaBuffer(buffer, fore_color, back_color);  //clear buffer
 }
 
-void printf(const char* text, ...) {
-	
+void print(VgaContext* vga, const char* text) {
+	for (u16 i = 0; i < strlen(text); ++i) {
+		if (text[i] == '\n') {
+			vga->count += 30;
+		} else {
+			vga->vgaBuffer[vga->count] = vgaEntry(text[i], VGA_WHITE, VGA_BLACK);
+			++vga->count;
+		}
+	}
 }
 
