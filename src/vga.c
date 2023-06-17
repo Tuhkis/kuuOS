@@ -1,5 +1,6 @@
 #include "vga.h"
 #include "string.h"
+#include "int.h"
 
 u16 vgaEntry(unsigned char ch, VgaColor fore_color, VgaColor back_color) {
   u16 ax = 0;
@@ -35,6 +36,21 @@ void print(VgaContext* vga, const char* text) {
 			vga->vgaBuffer[vga->count] = vgaEntry(text[i], VGA_WHITE, VGA_BLACK);
 			++vga->count;
 		}
+	}
+}
+
+void printNum(VgaContext* vga, u32 num) {
+	u16 c = 0;
+	u32 nr = reverseInt(num);
+	for (u16 i = 0; i < countDigits(nr); ++i) {
+ 		unsigned long vpow = 1;
+ 		for(u8 d = 0; d < (i); d++)
+   			vpow *= 10;
+		u8 n = (nr / vpow) % 10;
+
+		char* a = "0";
+		a[0] = num2char(n);
+		print(vga, a);
 	}
 }
 

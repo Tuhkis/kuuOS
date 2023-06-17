@@ -35,5 +35,6 @@ void clearVgaBuffer(u16** buffer, VgaColor fore_color, VgaColor back_color);
 void initVga(u16** buffer, VgaColor fore_color, VgaColor back_color);
 
 void print(VgaContext* vga, const char* text);
+void printNum(VgaContext* vga, u32 num);
 
 #endif // VGA_H

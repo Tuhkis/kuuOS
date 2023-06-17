@@ -8,3 +8,7 @@ u16 strlen(const char* s) {
 	return c;
 }
 
+char num2char(const u8 c) {
+	return c + '0';
+}
+
