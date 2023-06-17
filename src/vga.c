@@ -54,3 +54,17 @@ void printNum(VgaContext* vga, u32 num) {
 	}
 }
 
+/*
+void printf(VgaContext* vga, const char* t, ...) {
+	if (*++t == '%') {
+		char c = *++t;
+		switch (c) {
+			case 'd':
+				printNum
+				break;
+		}
+	} else {
+		vgaEntry(*t, VGA_WHITE, VGA_BLACK);
+	}
+}*/
+
