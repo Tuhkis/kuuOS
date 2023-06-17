@@ -1,12 +1,12 @@
 CC=gcc
-AS=as
+AS=nasm
 LD=ld
 
-CFLAGS=-m32 -std=gnu99 -ffreestanding -O3 -Wall -Wextra
+CFLAGS=-m32 -std=gnu99 -ffreestanding -O3 -Wall -Wextra -nostdlib -nostdinc -fno-builtin -fno-stack-protector 
 OUT=kuuOS
 COMP=$(CC) $(CFLAGS) -c
 
-all: kernel.o boot.o vga.o keyboard.o string.o int.o
+ttt: gdtas.o kernel.o boot.o vga.o keyboard.o string.o int.o gdt.o
 	ld -m elf_i386 -T linker.ld *.o -o $(OUT).bin -nostdlib
 	grub-file --is-x86-multiboot kuuOS.bin
 	mkdir -p iso/boot/grub
@@ -29,8 +29,14 @@ string.o: src/string.c src/string.h
 int.o: src/int.c src/int.h
 	$(COMP) src/int.c
 
+gdt.o: src/gdt.c src/gdt.h
+	$(COMP) src/gdt.c
+
 boot.o: src/boot.s
-	$(AS) --32 src/boot.s -o boot.o
+	$(AS) -felf32 src/boot.s -o boot.o
+
+gdtas.o: src/gdtas.s
+	$(AS) -felf32 src/gdtas.s -o gdtas.o
 
 a20.o: src/a20.s
 	$(AS) --32 src/a20.s -o a20.o

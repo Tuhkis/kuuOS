@@ -9,6 +9,7 @@
 typedef struct {
 	u16* vgaBuffer;
 	u32 count;
+	u32 cursorX, cursorY;
 } VgaContext;
 
 typedef enum {
@@ -33,6 +34,7 @@ typedef enum {
 u16 vgaEntry(unsigned char ch, VgaColor fore_color, VgaColor back_color);
 void clearVgaBuffer(u16** buffer, VgaColor fore_color, VgaColor back_color);
 void initVga(u16** buffer, VgaColor fore_color, VgaColor back_color);
+void vgaMoveCursor(VgaContext vga);
 
 void print(VgaContext* vga, const char* text);
 void printNum(VgaContext* vga, u32 num);

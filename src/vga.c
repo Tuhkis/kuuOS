@@ -1,6 +1,7 @@
 #include "vga.h"
 #include "string.h"
 #include "int.h"
+#include "keyboard.h"
 
 u16 vgaEntry(unsigned char ch, VgaColor fore_color, VgaColor back_color) {
   u16 ax = 0;
@@ -28,6 +29,15 @@ void initVga(u16** buffer, VgaColor fore_color, VgaColor back_color) {
 	clearVgaBuffer(buffer, fore_color, back_color);  //clear buffer
 }
 
+void vgaMoveCursor(VgaContext vga) {
+	// The screen is 80 characters wide...
+	u16 cursorLocation = vga.cursorX * 80 + vga.cursorY;
+	outb(0x3D4, 14);                  // Tell the VGA board we are setting the high cursor byte.
+	outb(0x3D5, cursorLocation >> 8); // Send the high cursor byte.
+	outb(0x3D4, 15);                  // Tell the VGA board we are setting the low cursor byte.
+	outb(0x3D5, cursorLocation);      // Send the low cursor byte.
+}
+
 void print(VgaContext* vga, const char* text) {
 	for (u16 i = 0; i < strlen(text); ++i) {
 		if (text[i] == '\n') {
@@ -40,7 +50,6 @@ void print(VgaContext* vga, const char* text) {
 }
 
 void printNum(VgaContext* vga, u32 num) {
-	u16 c = 0;
 	u32 nr = reverseInt(num);
 	for (u16 i = 0; i < countDigits(nr); ++i) {
  		unsigned long vpow = 1;
